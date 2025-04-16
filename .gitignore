@@ -1,0 +1,31 @@
+# Entornos virtuales
+venv/
+.env/
+ENV/
+env/
+
+# Archivos de configuración o secretos
+*.env
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Archivos de Jupyter y VSCode
+*.nbconvert.ipynb
+.vscode/
+
+# Repositorios embebidos o carpetas externas
+ProyectoMapa/
