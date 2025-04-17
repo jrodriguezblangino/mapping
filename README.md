@@ -59,12 +59,3 @@ python src/main.py
 - Folium: Generación de mapas interactivos
 - NumPy: Cálculos numéricos
 
-## 📁 Estructura del Proyecto
-
-ProyectoMapa/
-├── src/ # Source code
-├── data/ # Data files
-├── docs/ # Documentation
-├── tests/ # Unit tests
-└── requirements.txt # Dependencies
-
