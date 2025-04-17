@@ -68,7 +68,7 @@ def estilo_poblacion(feature: Dict) -> Dict:
         'fillColor': feature['properties']['color'],
         'color': 'black',
         'weight': 0.5,
-        'fillOpacity': 0.6
+        'fillOpacity': 0.5
     }
 
 def crear_capa_poblacion(ruta_geojson: str) -> folium.FeatureGroup:
@@ -86,9 +86,9 @@ def crear_capa_poblacion(ruta_geojson: str) -> folium.FeatureGroup:
                 'fillColor': color,
                 'color': 'black',
                 'weight': 0.5,
-                'fillOpacity': 0.6
+                'fillOpacity': 0.5
             },
-            tooltip=f"Población 2005: {row['poblacion_2005']:,}"
+            tooltip=f"Población: {row['poblacion_2005']:,}"
         ).add_to(fg)
     
     return fg

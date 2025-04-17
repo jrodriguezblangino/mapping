@@ -5,6 +5,8 @@ from processing_database import procesar_datos
 import tempfile
 from folium.plugins import FeatureGroupSubGroup
 from folium import LayerControl
+from branca.element import Element, MacroElement
+from jinja2 import Template
 
 def menu_principal():
     """Muestra el menú principal del programa"""
@@ -40,7 +42,11 @@ def generar_mapa():
             mapa = folium.Map(
                 location=[df['Latitude'].mean(), df['Longitude'].mean()],
                 zoom_start=5,
-                tiles='CartoDB positron'
+                tiles='CartoDB positron',
+                min_zoom=2,  # Zoom mínimo global
+                max_zoom=18,  # Zoom máximo
+                max_bounds=True,  # Limitar movimiento del mapa
+                bounds=[[-90, -180], [90, 180]]  # Límites del mapa
             )
             
             # Capa de Starbucks
@@ -63,6 +69,97 @@ def generar_mapa():
             
             # Control de capas
             LayerControl(collapsed=False).add_to(mapa)
+            
+            # Añadir leyenda de población
+            class Leyenda(MacroElement):
+                def __init__(self, colores, etiquetas):
+                    super().__init__()
+                    self._name = 'Leyenda'
+                    self.colores = colores
+                    self.etiquetas = etiquetas
+
+                def render(self, **kwargs):
+                    self._parent.get_root().header.add_child(
+                        folium.Element(
+                            f"""
+                            <div id='leyenda' style='
+                                position: absolute;
+                                bottom: 30px;
+                                left: 30px;
+                                z-index: 9999;
+                                background-color: white;
+                                padding: 15px;
+                                border: 1px solid #cccccc;
+                                border-radius: 8px;
+                                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                                font-family: "Segoe UI", Arial, sans-serif;
+                                font-size: 14px;
+                                color: #333333;
+                                line-height: 1.5;
+                            '>
+                                <strong style='
+                                    display: block;
+                                    font-size: 16px;
+                                    margin-bottom: 10px;
+                                    color: #2c3e50;
+                                    border-bottom: 1px solid #eee;
+                                    padding-bottom: 5px;
+                                '>Densidad Poblacional</strong>
+                                
+                                <div style='display: flex; align-items: center; margin: 8px 0;'>
+                                    <div style='
+                                        width: 24px;
+                                        height: 24px;
+                                        background: {self.colores['alta']};
+                                        border: 1px solid #ffffff;
+                                        border-radius: 3px;
+                                        margin-right: 10px;
+                                    '></div>
+                                    <span>{self.etiquetas['alta']}</span>
+                                </div>
+                                
+                                <div style='display: flex; align-items: center; margin: 8px 0;'>
+                                    <div style='
+                                        width: 24px;
+                                        height: 24px;
+                                        background: {self.colores['media']};
+                                        border: 1px solid #ffffff;
+                                        border-radius: 3px;
+                                        margin-right: 10px;
+                                    '></div>
+                                    <span>{self.etiquetas['media']}</span>
+                                </div>
+                                
+                                <div style='display: flex; align-items: center; margin: 8px 0;'>
+                                    <div style='
+                                        width: 24px;
+                                        height: 24px;
+                                        background: {self.colores['baja']};
+                                        border: 1px solid #ffffff;
+                                        border-radius: 3px;
+                                        margin-right: 10px;
+                                    '></div>
+                                    <span>{self.etiquetas['baja']}</span>
+                                </div>
+                            </div>
+                            """
+                        )
+                    )
+
+            # Definir colores y etiquetas
+            leyenda = Leyenda(
+                colores={
+                    'baja': '#2ca25f',
+                    'media': '#ff7f00',
+                    'alta': '#e41a1c'
+                },
+                etiquetas={
+                    'baja': 'Baja (<10M)',
+                    'media': 'Media (10M-40M)',
+                    'alta': 'Alta (>40M)'
+                }
+            )
+            mapa.add_child(leyenda)
             
             mapa.save(temp_html_name)
             print("\nMapa generado exitosamente. Abriendo en navegador...")
