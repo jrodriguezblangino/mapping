@@ -7,9 +7,21 @@ from folium.plugins import FeatureGroupSubGroup
 from folium import LayerControl
 from branca.element import Element, MacroElement
 from jinja2 import Template
+from typing import NoReturn
 
-def menu_principal():
-    """Muestra el menú principal del programa"""
+def menu_principal() -> NoReturn:
+    """
+    Controla el flujo principal de la aplicación mediante un menú interactivo.
+    
+    Muestra opciones para generar el mapa o salir del programa, manejando
+    las entradas del usuario y ejecutando las funciones correspondientes.
+    
+    Ejemplo:
+        >>> menu_principal()
+        === MENÚ PRINCIPAL ===
+        1. Seleccionar país y generar mapa
+        2. Salir
+    """
     while True:
         print("\n=== MENÚ PRINCIPAL ===")
         print("1. Seleccionar país y generar mapa")
@@ -26,8 +38,19 @@ def menu_principal():
         else:
             print("Opción inválida, intente nuevamente")
 
-def generar_mapa():
-    """Genera y muestra el mapa con datos temporales"""
+def generar_mapa() -> None:
+    """
+    Genera un mapa interactivo combinando datos de Starbucks y población.
+    
+    Proceso:
+    1. Crea archivos temporales para el procesamiento
+    2. Configura el mapa base con límites y controles de zoom
+    3. Añade capas de Starbucks y densidad poblacional
+    4. Incluye leyenda interactiva y controles de capas
+    5. Guarda y muestra el resultado en el navegador
+    
+    Maneja excepciones y limpia archivos temporales al finalizar.
+    """
     try:
         # Crear archivo temporal
         with tempfile.NamedTemporaryFile(suffix='.csv', delete=False) as tmp_csv:

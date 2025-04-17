@@ -1,3 +1,6 @@
-pandas>=2.0.0
-folium>=0.14.0
-numpy>=1.24.0
+pandas==2.0.3
+folium==0.14.0
+numpy==1.24.4
+branca==0.6.0
+jinja2==3.1.2
+python-dotenv==1.0.0  # Para futuras mejoras de configuración
