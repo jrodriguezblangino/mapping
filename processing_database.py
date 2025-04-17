@@ -1,5 +1,6 @@
 from paises import PAISES_ISO
 import pandas as pd
+import tempfile
 
 def cargar_datos():
     """Carga y limpia los datos originales"""
@@ -34,9 +35,9 @@ def seleccionar_pais(codigos_paises):
             print("Error: Debe ingresar un número válido")
 
 def guardar_filtrado(df_filtrado):
-    """Guarda el dataframe filtrado para su visualización"""
+    """Guarda el dataframe filtrado temporalmente"""
     df_filtrado.to_csv('filtered_starbucks.csv', index=False)
-    print(f"\nBase filtrada guardada con {len(df_filtrado)} locales.")
+    print(f"\nBase temporal creada con {len(df_filtrado)} locales.")
 
 def procesar_datos():
     """Flujo principal de procesamiento de datos"""
