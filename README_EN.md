@@ -27,7 +27,7 @@ The resulting map allows you to visualize the distribution of Starbucks stores i
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/MapProject.git
+git clone https://github.com/your-username/MapProject.git](https://github.com/jrodriguezblangino/mapping
 cd MapProject
 ```
 
