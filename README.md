@@ -27,7 +27,7 @@ El mapa resultante permite visualizar la distribución de las tiendas Starbucks 
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu-usuario/ProyectoMapa.git
+git clone https://github.com/tu-usuario/ProyectoMapa.git](https://github.com/jrodriguezblangino/mapping
 cd ProyectoMapa
 ```
 
